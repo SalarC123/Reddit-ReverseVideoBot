@@ -65,15 +65,12 @@ def download_video(submissionurl):
     return videofilename
 
 def reverse_video_and_save(normalvideo):
-<<<<<<< HEAD
     '''
     Takes the old video file and uses ffmpeg with the command
     line to apply the reverse video code below
     '''
 
     # os.system allows for usage of terminal commands
-=======
->>>>>>> 04e34619f8f470c82859ec0dc82ea8da80a24775
     os.system(f'ffmpeg -i {normalvideo}.mp4 -vf reverse {normalvideo}reversed.mp4')
 
 def post_video_to_streamable(reversedvideo):
