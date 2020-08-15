@@ -36,9 +36,11 @@ def bot_run():
             continue
 
         # Allows for later use of video file name
-        LATER_ASSIGNED_VARS = download_video()
+        videofilename = download_video()
+        # This removes the .mp4 at the end
+        shortenedfilename = os.path.basename(videofilename)[:-4]
 
-        reverse_video_and_save('os.path.basename')
+        reverse_video_and_save(shortenedfilename)
 
         post_video_to_streamable('os.path.basename[:-4] + reversed.mp4')
 
@@ -51,8 +53,16 @@ def bot_run():
 
 
 def download_video(submissionurl):
-    pass
-    # Return statement
+    '''
+    Saves video from the provided reddit url to directory
+    and returns the path to the saved video
+    '''
+
+    # Finds the video from the submission link
+    # max_q = maximum quality
+    videofile = redvid.Downloader(url = submissionurl, max_q = True)
+    videofilename = videofile.download()
+    return videofilename
 
 def reverse_video_and_save(normalvideo):
     pass
