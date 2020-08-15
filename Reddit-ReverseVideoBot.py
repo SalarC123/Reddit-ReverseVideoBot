@@ -13,6 +13,9 @@ reddit = praw.Reddit(username=PUT_USER_NAME_HERE,
                      client_secret=PUT_CLIENT_SECRET_HERE,
                      user_agent=PUT_USER_AGENT_HERE)
 
+SPAW = spaw.SPAW()
+SPAW.auth(spawemail,spawpassword)
+
 def bot_run():
     '''
     Looks for mentions of the bot and then downloads
@@ -45,9 +48,9 @@ def bot_run():
         post_video_to_streamable(f'{shortenedfilename}reversed.mp4')
 
         # Allows for later use of Streamable link
-        LATER_ASSIGNED_VARS = post_video_to_streamable()
+        streamableurl = post_video_to_streamable()
 
-        comment_reply('streamablelink')
+        comment_reply(streamableurl)
 
         delete_videos()
 
@@ -64,6 +67,7 @@ def download_video(submissionurl):
     videofilename = videofile.download()
     return videofilename
 
+
 def reverse_video_and_save(normalvideo):
     '''
     Takes the old video file and uses ffmpeg with the command
@@ -73,12 +77,23 @@ def reverse_video_and_save(normalvideo):
     # os.system allows for usage of terminal commands
     os.system(f'ffmpeg -i {normalvideo}.mp4 -vf reverse {normalvideo}reversed.mp4')
 
+
 def post_video_to_streamable(reversedvideo):
-    pass
-    # Return statement
+    '''
+    Uploads the reversed video to https://streamable.com
+    and returns the video's custom url
+    '''
+
+    # Returns dictionary of video info
+    uploaded = SPAW.videoUpload(reversedvideo)
+    # Connects streamable url with the id of the posted video
+    streamableurl = 'https://streamable.com/' + uploaded['shortcode']
+    return streamableurl
+
 
 def comment_reply(streamablelink):
     pass
+
 
 def delete_videos():
     pass
