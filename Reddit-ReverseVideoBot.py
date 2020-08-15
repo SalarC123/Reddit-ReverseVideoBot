@@ -1,10 +1,11 @@
 import praw
-from botsecrets2 import *
 import os
-import urllib
+import spaw
+import redvid
+import re
+from botsecrets2 import *
 
-
-os.chdir('/users/tabinda/documents/python/reddit-reversevideobot')
+os.chdir(mydirectory)
 
 reddit = praw.Reddit(username=PUT_USER_NAME_HERE,
                      password=PUT_PASSWORD_HERE,
@@ -13,24 +14,62 @@ reddit = praw.Reddit(username=PUT_USER_NAME_HERE,
                      user_agent=PUT_USER_AGENT_HERE)
 
 def bot_run():
+    '''
+    Looks for mentions of the bot and then downloads
+    the submission video, reverses the video, posts it to
+    Streamable, and replies to the comment with the link
+    '''
+
+    # Checks every new comment posted to reddit and skips ones
+    # made before the bot ran
+    for comment in reddit.subreddit('all').stream.comments(skip_existing=True):
+        try:
+            botcall = re.compile(r'!ReverseVideo',re.I).search(comment.body).group()
+        except AttributeError:
+            # continues if botcall can not be found
+            continue
+
+        try:
+            download_video(comment.submission.url)
+        except BaseException:
+            # continues if there is no video in the reddit submission
+            continue
+
+        # Allows for later use of video file name
+        LATER_ASSIGNED_VARS = download_video()
+
+        reverse_video_and_save('os.path.basename')
+
+        post_video_to_streamable('os.path.basename[:-4] + reversed.mp4')
+
+        # Allows for later use of Streamable link
+        LATER_ASSIGNED_VARS = post_video_to_streamable()
+
+        comment_reply('streamablelink')
+
+        delete_videos()
+
+
+def download_video(submissionurl):
+    pass
+    # Return statement
+
+def reverse_video_and_save(normalvideo):
     pass
 
-def find_link_and_download(redditsubmission):
+def post_video_to_streamable(reversedvideo):
+    pass
+    # Return statement
+
+def comment_reply(streamablelink):
     pass
 
-def reverse_video_and_save(videofile):
+def delete_videos():
     pass
-
-def post_video(videolink/download???):
-    pass
-
-
-
 
 
 #TODO Checklist
 '''
-multiple functions
 refactor
 multiline comments
 comments throughout code
