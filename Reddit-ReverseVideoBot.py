@@ -101,8 +101,6 @@ def delete_videos():
     [os.remove(file) for file in os.listdir(mydirectory) if file.endswith('.mp4')]
 
 
-#TODO Checklist
-'''
-commit often - committing this change will...
-inspiration --> https://sandiegofreepress.org/2017/11/one-veterans-dream-kurt-vonneguts-war-in-reverse-video-worth-watching/#.XzbBwS2z2Dc
-'''
+
+if __name__ == '__main__':
+    bot_run()
