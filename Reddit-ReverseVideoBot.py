@@ -3,7 +3,10 @@ import os
 import spaw
 import redvid
 import re
-from botsecrets2 import *
+from botsecrets2 import spawemail, spawpassword
+from botsecrets2 import PUT_USER_NAME_HERE, PUT_PASSWORD_HERE, PUT_CLIENT_ID_HERE, PUT_CLIENT_SECRET_HERE, PUT_USER_AGENT_HERE
+from botsecrets2 import mydirectory
+
 
 os.chdir(mydirectory)
 
@@ -93,8 +96,8 @@ def post_video_to_streamable(reversedvideo):
 
 def delete_videos():
     '''
-    Permanently deletes all .mp4 files from directory
-    before next use
+    Permanently deletes all .mp4 files
+    from personal directory before next use
     '''
 
     [os.remove(file) for file in os.listdir(mydirectory) if file.endswith('.mp4')]
@@ -105,7 +108,4 @@ if __name__ == '__main__':
     bot_run()
 
 
-# # Allows for later use of video file name
-# videofilename = download_video(comment.submission.url)
-# # This removes the .mp4 at the end
-# shortenedfilename = os.path.basename(videofilename)[:-4]
+# deployment --> 'https://education.github.com/pack?sort=popularity&tag=Cloud'
